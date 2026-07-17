@@ -1,122 +1,184 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    adult: true,
+    gender: "male",
+    course: "MCA",
+  });
+
+  const [submitted, setSubmitted] = useState(false);
+
+  function changeHandler(event) {
+    const { name, value, type, checked } = event.target;
+
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  }
+
+  function submit(event) {
+    event.preventDefault();
+    console.log(formData);
+    setSubmitted(true);
+  }
+
+  if (submitted) {
+    return (
+      <div className="container">
+        <div className="form-card">
+          <h1>🎉 Form Submitted Successfully</h1>
+          <hr />
+
+          <p><strong>First Name:</strong> {formData.firstName}</p>
+          <p><strong>Last Name:</strong> {formData.lastName}</p>
+          <p><strong>Email:</strong> {formData.email}</p>
+          <p><strong>Course:</strong> {formData.course}</p>
+          <p><strong>Gender:</strong> {formData.gender}</p>
+          <p><strong>18+:</strong> {formData.adult ? "Yes" : "No"}</p>
+
+          <button onClick={() => setSubmitted(false)}>
+            Fill Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="container">
+      <form className="form-card" onSubmit={submit}>
+        <h1>Student Registration</h1>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+        <div className="form-group">
+          <label>First Name</label>
+          <input
+            type="text"
+            name="firstName"
+            placeholder="Enter First Name"
+            value={formData.firstName}
+            onChange={changeHandler}
+          />
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        <div className="form-group">
+          <label>Last Name</label>
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Enter Last Name"
+            value={formData.lastName}
+            onChange={changeHandler}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter Email"
+            value={formData.email}
+            onChange={changeHandler}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            value={formData.password}
+            onChange={changeHandler}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Confirm Password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={changeHandler}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Course</label>
+          <select
+            name="course"
+            value={formData.course}
+            onChange={changeHandler}
+          >
+            <option value="MCA">MCA</option>
+            <option value="MSc">MSc</option>
+            <option value="MBA">MBA</option>
+            <option value="BCA">BCA</option>
+          </select>
+        </div>
+
+        <div className="checkbox">
+          <input
+            type="checkbox"
+            name="adult"
+            checked={formData.adult}
+            onChange={changeHandler}
+          />
+          <label>18+ Years Old</label>
+        </div>
+
+        <div className="radio-group">
+          <label>Gender</label>
+
+          <div className="radio-options">
+            <label>
+              <input
+                type="radio"
+                name="gender"
+                value="male"
+                checked={formData.gender === "male"}
+                onChange={changeHandler}
+              />
+              Male
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="gender"
+                value="female"
+                checked={formData.gender === "female"}
+                onChange={changeHandler}
+              />
+              Female
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="gender"
+                value="others"
+                checked={formData.gender === "others"}
+                onChange={changeHandler}
+              />
+              Others
+            </label>
+          </div>
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
 }
 
-export default App
+export default App;
